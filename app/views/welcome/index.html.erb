@@ -1,5 +1,5 @@
 <% if signed_in? %>
-  <h4>Check out <%= link_to "Assignments", user_assignments_path([current_user.id, @assignment]) %> </h4>
+  <h4>Check out <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment) %> </h4>
    <br /><br />
     <h4>Check out <%= link_to "Current Stats", completed_most_path(@user) %></h4>
       <% else %>
