@@ -10,7 +10,6 @@ class UsersController < ApplicationController
 
   def show_completed
     @users = User.all
-    #@user = User.find(params[:id])
   end
 
 end

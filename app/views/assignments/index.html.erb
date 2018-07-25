@@ -4,28 +4,24 @@
   <%= link_to "Create New Assignment", new_assignment_path %>
 </div>
 <h3>Incomplete Assignments</h3>
-  <%= form_tag(completed_assignment_path, method: :put)  do %>
-   <% for assignment in @incomplete_assignment %>
-    <ul>
-      <% if assignment.user == current_user %>
-      <%= check_box_tag 'assignment_id[]', assignment.id %>
-      <%= link_to assignment.name, user_assignment_path([current_user.id, assignment.id]) %>
-    </ul>
-   <% end %>
-   <% if assignment.user == current_user %>
-  <%= submit_tag 'Mark as Completed' %>
- <% end %>
- <% end %>
-<% else %>
+  <%= form_tag(completed_assignment_path, method: :put) do %>
+    <% for assignment in @incomplete_assignments %>
+      <ul>
+        <%= check_box_tag 'assignment_ids[]', assignment.id %>
+        <%= link_to assignment.name, user_assignment_path(current_user, assignment) %>
+      </ul>
+    <% end %>
+    <%= submit_tag 'Mark as Completed' %>
+  <% end %>
 <br>
 </center>
 <center>
 <h3>Completed Assignments</h3>
-  <% for assignment in @complete_assignment %>
+  <% for assignment in @complete_assignments %>
     <ul>
      <%= link_to assignment.name, assignment_path(assignment) %>
     </ul>
- <% end %>
+ <%# end %>
 <% end %>
 </center>
 

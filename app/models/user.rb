@@ -8,9 +8,11 @@ class User < ApplicationRecord
   has_many :assignments
   has_many :tasks, through: :assignments
 
-  def assignments_completed
-    User.joins(:assignment).where(status: true).order('id DESC')
-  end
+  scope :most_completed_assignments, -> { order(assignments_completed_count: :desc) }
+
+  #def assignments_completed_count
+  #  User.joins(:assignment).where(status: true).order('id ASC')
+#  end
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

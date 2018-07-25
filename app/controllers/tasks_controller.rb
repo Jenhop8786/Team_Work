@@ -8,12 +8,13 @@ class TasksController < ApplicationController
   end
 
   def create
-    @assignment = Assignment.find(params[:assignment_id])
     @task = @assignment.tasks.build(task_params)
     @task.user_id = current_user.id
-    @task.save
+    if @task.save
+      @assignment.tasks << @task
+    end
 
-    redirect_to @assignment
+    redirect_to [current_user, @assignment]
   end#create
 
     def show
@@ -28,18 +29,18 @@ class TasksController < ApplicationController
     else
       flash[:error] = "Task could not be deleted"
     end
-      redirect_to @assignment
+      redirect_to [current_user, @assignment], notice: "Task deleted"
   end #destroy
 
   def complete
     if !@task.completed?
       @task.update_attribute(:completed_at, Time.now)
 
-      redirect_to @assignment, notice: "Task completed"
+      redirect_to [current_user, @assignment], notice: "Task Completed"
     else
 
     @task.update_attribute(:completed_at, nil)
-     redirect_to @assignment, notice: "Task Incomplete"
+     redirect_to [current_user, @assignment], notice: "Task Incomplete"
     end
   end
 

@@ -4,10 +4,9 @@ class AssignmentsController < ApplicationController
 
   #GET/ASSIGNMENTS
   def index
-    #@user = User.find params[:user_id]
-    @assignments = current_user.id
-    @incomplete_assignment = Assignment.incomplete
-    @complete_assignment = Assignment.complete
+    user = User.find params[:user_id]
+    @incomplete_assignments = user.assignments.incomplete
+    @complete_assignments = user.assignments.complete
   end#index
 
   def new
@@ -19,8 +18,7 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = current_user.assignments.build(assignment_params)
      if @assignment.save
-
-       redirect_to assignments_path, notice: "Assignment was created successfully!"
+       redirect_to [current_user, @assignment], notice: "Assignment was created successfully!"
      else
        render :new
      end
@@ -28,7 +26,6 @@ class AssignmentsController < ApplicationController
 
    def show
       #@user = current_user.assignments
-      @assignments = current_user.assignments.find(params[:id])
       @task = Task.new
     end#show
 
@@ -39,7 +36,7 @@ class AssignmentsController < ApplicationController
   def update
     @assignment.update(assignment_params)
 
-    redirect_to @assignment, notice: "Assignment updated successfully!"
+    redirect_to [current_user, @assignment], notice: "Assignment updated successfully!"
   end#update
 
 
@@ -47,14 +44,20 @@ class AssignmentsController < ApplicationController
   def destroy
     @assignment.destroy
 
-    redirect_to @assignment, notice: "Assignment was deleted successfully!"
+    redirect_to [current_user, @assignment], notice: "Assignment was deleted successfully!"
   end #destroy
 
   def completed
-     Assignment.where(id: params[:assignment_id]).update_all(status: true)
+     Assignment.where(id: params[:assignment_ids]).update_all(status: true)
+     current_user.assignments_completed_count +=(params[:assignment_ids].count)
+     current_user.save
 
      redirect_to user_assignments_path(current_user.id)
   end#completed
+
+  def assignments_per_user
+    @assignments_per_user_count = Assignment.joins(:user).group(:user).order('count_all DESC').limit(10).count
+  end
 
    private
 #STRONG PARAMS

@@ -1,6 +1,7 @@
 class Assignment < ApplicationRecord
-  belongs_to :user
-  has_many :tasks
+  belongs_to :user, counter_cache: true
+  has_many :assigned_tasks, dependent: :destroy
+  has_many :tasks, through: :assigned_tasks
 
   validates_presence_of :name
   validates_presence_of :due_date
