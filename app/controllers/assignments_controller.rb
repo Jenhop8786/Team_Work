@@ -42,22 +42,22 @@ class AssignmentsController < ApplicationController
 
  #DELETE
   def destroy
-    @assignment.destroy
+    if @assignment.destroy
+        current_user.assignments_completed_count -= 1
+        current_user.save
 
     redirect_to [current_user, @assignment], notice: "Assignment was deleted successfully!"
-  end #destroy
+  end
+end #destroy
 
   def completed
+    #binding.pry
      Assignment.where(id: params[:assignment_ids]).update_all(status: true)
      current_user.assignments_completed_count +=(params[:assignment_ids].count)
      current_user.save
 
      redirect_to user_assignments_path(current_user.id)
   end#completed
-
-  def assignments_per_user
-    @assignments_per_user_count = Assignment.joins(:user).group(:user).order('count_all DESC').limit(10).count
-  end
 
    private
 #STRONG PARAMS

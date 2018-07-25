@@ -1,19 +1,11 @@
 <h3> Status of who has done what</h3>
   <br>
+  <h1> **Featured User** </h1>
+  <h2><%= featured_user.email %> has completed the most (<%= featured_user.assignments.complete.size %>) assignments!</h2>
 
-    <% for user in @users %>
-    <%= user.email %> has completed <%= User.most_completed_assignments.size %> assignments. <br>
-    <% end %>
-
-    <% if user.assignments_completed_count.size > 5 %>
-    <h1> **Featured User** </h1>
-      <h2><%= user.email %> has completed the most assignments!</h2>
-        <% else %>
-         <p> Not enough completed Assignments to be featured!</p>
-      <% end %>
-
-
-
+  <% for user in @most_completed_users %>
+    <%= user.email %> has completed <%= user.assignments.complete.size %> assignments. <br>
+  <% end %>
 
 
   <%= link_to 'Back to your asssignments', user_assignments_path(current_user, @assignment) %>

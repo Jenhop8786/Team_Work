@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show_completed
-    @users = User.all
+    @featured_user = User.most_completed_assignments
+    @most_completed_users = User.second_most_completed_assignments
   end
-
-end
+end#class

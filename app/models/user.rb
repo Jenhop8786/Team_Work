@@ -5,14 +5,11 @@ class User < ApplicationRecord
 
   validates_presence_of :email, uniqueness: true
 
+  scope :most_completed_assignments, -> { order(assignments_completed_count: :desc).first }
+  scope :second_most_completed_assignments, -> { order(assignments_completed_count: :desc).all[1..-1] }
   has_many :assignments
+  has_many :assignments_completed, -> { complete }, class_name: "Assignment"
   has_many :tasks, through: :assignments
-
-  scope :most_completed_assignments, -> { order(assignments_completed_count: :desc) }
-
-  #def assignments_completed_count
-  #  User.joins(:assignment).where(status: true).order('id ASC')
-#  end
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

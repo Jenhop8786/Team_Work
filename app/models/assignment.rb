@@ -1,5 +1,5 @@
 class Assignment < ApplicationRecord
-  belongs_to :user, counter_cache: true
+  belongs_to :user
   has_many :assigned_tasks, dependent: :destroy
   has_many :tasks, through: :assigned_tasks
 
@@ -9,6 +9,10 @@ class Assignment < ApplicationRecord
 
   def self.complete
     where(status: true).order('id DESC')
+  end
+
+  def complete?
+    status
   end
 
   def self.incomplete
