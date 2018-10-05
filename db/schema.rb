@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_25_124852) do
+ActiveRecord::Schema.define(version: 2018_10_05_155332) do
 
   create_table "assigned_tasks", force: :cascade do |t|
     t.integer "assignment_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2018_07_25_124852) do
     t.boolean "status", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
