@@ -1,19 +1,24 @@
-//Load/show Assignments without page reload
-/*$(function(){
- $("a.assignments").on("click", function(e){
-  $.ajax({
-    url: this.href,
-    dataType: 'script'
-  })
-    e.preventDefault();
+//Load incomplete assignment info & task form without page reload
+$(function(){
+    $("a.assignment_page").on("click", function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        method: "GET",
+        url: this.href
+      }).done(function(data) {
+        //get response here
+        $("div.assignments").html(response)
+        //load data into the DOM(add to current page)
+      });
+    });
   });
- });
- */
 
 //Submit task using Ajax
 $(function(){
   $("#new_task").on("submit", function(e){
- // (this) is where the URL is submitting POST request to
+    //prevent browser lock/reload
   e.preventDefault();
 
    $.ajax({

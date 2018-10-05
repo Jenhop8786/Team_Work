@@ -1,8 +1,8 @@
-<p>Assignment Name:<%= @assignment.name %></p>
-<span id="assignment-id">Assignment Number:<%= @assignment.id %></span>
-<p>Finish for practice on: <%= @assignment.due_date %></p>
-
-<%#= link_to 'Practice Tasks', assignment_tasks_path(@assignment), :class => 'assignment_tasks' %>
+<div class="assignments">
+  <p>Assignment Name:<%= @assignment.name %></p>
+   <span id="assignment-id">Assignment Number:<%= @assignment.id %></span>
+  <p>Finish for practice on: <%= @assignment.due_date %></p>
+</div>
 
 <ol class="tasks">
   <%= render @assignment.tasks %>
@@ -15,6 +15,7 @@
     <%= f.submit %>
   <% end %>
 </div>
+
 
 <br><br>
 <% if @assignment.user == current_user %>

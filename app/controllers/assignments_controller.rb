@@ -7,9 +7,6 @@ class AssignmentsController < ApplicationController
     user = User.find params[:user_id]
     @incomplete_assignments = user.assignments.incomplete
     @complete_assignments = user.assignments.complete
-
-    #render :layout => false
-    #render :json => @incomplete_assignments, @complete_assignments
   end#index
 
   def new
