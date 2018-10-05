@@ -1,23 +1,31 @@
-<h2>Created by: <%= @assignment.user.email %></h2>
-<br><br>
-<h2><%= @assignment.name %></h2>
-<h4>Due Date: <%= @assignment.due_date %></h4>
+<p>Assignment Name:<%= @assignment.name %></p>
+<span id="assignment-id">Assignment Number:<%= @assignment.id %></span>
+<p>Finish for practice on: <%= @assignment.due_date %></p>
 
-<div class="tasks_wrapper">
-  <%= render @assignment.tasks, locals:{assignment:@assignment} %>
+<%#= link_to 'Practice Tasks', assignment_tasks_path(@assignment), :class => 'assignment_tasks' %>
+
+<ol class="tasks">
+  <%= render @assignment.tasks %>
+</ol>
+
+<div class="form">
+  <h3>Add Tasks to assignment: <%= @assignment.name %> </h3>
+    <%= form_for([@assignment, @task]) do |f| %>
+    <%= f.text_field :name, placeholder: "New Task" %>
+    <%= f.submit %>
+  <% end %>
 </div>
+
+<br><br>
 <% if @assignment.user == current_user %>
- <div class="form">
-	<%= render "tasks/form" %>
-</div>
 <div class="links">
    <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data: { confirm: "Are you sure?" } %>
-  <br>
+    <br>
    <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %>
-  <br>
+    <br>
    <%= link_to 'Back to Assignments', [current_user, :assignments] %>
-   <br>
-</div>
+    <br>
 <% else %>
-<%= link_to 'Back to Assignments', assignments_path(@assignment) %>
+   <%= link_to 'Back to Assignments', assignments_path(@assignment) %>
 <% end %>
+</div>

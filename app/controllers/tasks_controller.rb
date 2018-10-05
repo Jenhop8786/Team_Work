@@ -5,22 +5,27 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
-  end
+    #render :layout => false
+    respond_to do |format|
+     format.html {render 'index.html', :layout => false}
+     format.js {render 'index.js', :layout => false}
+   end
+  end#index
 
   def create
-    @task = @assignment.tasks.build(task_params)
-    @task.user_id = current_user.id
-    if @task.save
-      @assignment.tasks << @task
-    end
+   @task = @assignment.tasks.build(task_params)
+   @task.user_id = current_user.id
+   if @task.save
+     @assignment.tasks << @task
+   end
+   render 'assignments/show'
+   #redirect_to [current_user, @assignment]
+end#create
 
-    redirect_to [current_user, @assignment]
-  end#create
-
-    def show
-       @assignments = Assignment.find(params[:assignment_id])
-       @task = Task.find(params[:id])
-     end#show
+  def show
+    @assignments = Assignment.find(params[:assignment_id])
+    @task = Task.find(params[:id])
+  end#show
 
   def destroy
     @task = @assignment.tasks.find(params[:id])
@@ -30,7 +35,7 @@ class TasksController < ApplicationController
       flash[:error] = "Task could not be deleted"
     end
       redirect_to [current_user, @assignment], notice: "Task deleted"
-  end #destroy
+  end#destroy
 
   def complete
     if !@task.completed?
@@ -42,7 +47,7 @@ class TasksController < ApplicationController
     @task.update_attribute(:completed_at, nil)
      redirect_to [current_user, @assignment], notice: "Task Incomplete"
     end
-  end
+  end#complete
 
   private
 

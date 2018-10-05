@@ -7,6 +7,9 @@ class AssignmentsController < ApplicationController
     user = User.find params[:user_id]
     @incomplete_assignments = user.assignments.incomplete
     @complete_assignments = user.assignments.complete
+
+    #render :layout => false
+    #render :json => @incomplete_assignments, @complete_assignments
   end#index
 
   def new
@@ -27,6 +30,7 @@ class AssignmentsController < ApplicationController
    def show
       #@user = current_user.assignments
       @task = Task.new
+      @tasks = @assignment.tasks
     end#show
 
 #PATCH
@@ -39,18 +43,15 @@ class AssignmentsController < ApplicationController
     redirect_to [current_user, @assignment], notice: "Assignment updated successfully!"
   end#update
 
-
  #DELETE
   def destroy
-    if @assignment.destroy
-        current_user.assignments_completed_count -= 1
-        current_user.save
+    @assignment.destroy
 
     redirect_to [current_user, @assignment], notice: "Assignment was deleted successfully!"
-  end
-end #destroy
+  end #destroy
 
   def completed
+    #binding.pry
      Assignment.where(id: params[:assignment_ids]).update_all(status: true)
      current_user.assignments_completed_count +=(params[:assignment_ids].count)
      current_user.save
