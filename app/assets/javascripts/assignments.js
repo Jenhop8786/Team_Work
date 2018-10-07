@@ -17,10 +17,13 @@ $(function(){
 
 //hide task form until clicked
 $(function() {
-  $("#new_task").submit(function(){
-        $(this).hide(id);
-    })
-  })
+  $('#new_task').hide();
+
+  $('#add_task').click(function() {
+    $('#new_task').show();
+  });
+});
+}
 
 //Submit task using Ajax
 $(function(){
