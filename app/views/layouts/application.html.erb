@@ -17,12 +17,14 @@
     <h3>The app that helps coaches stay better organized during practices and training</h3>
       <% if user_signed_in? %>
       <h2><ul>Welcome, <%= current_user.email if !current_user.nil? %></ul></h2>
-      </center>
       <%= link_to "Home Page", root_path %> ||
-      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %> ||
+      <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment), :class => "assignment_list" %> ||
+      <%= link_to "Current Stats", completed_most_path(@user) %></h4>
       <% else %>
     <h4> Sign-in or Sign-up to start making Assignments </h4>
     <% end %>
+    </center>
 
     <% if notice %>
     <p class="notice"><%= notice %></p>

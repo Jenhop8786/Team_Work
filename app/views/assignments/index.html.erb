@@ -1,3 +1,7 @@
+<div class="new_assignment">
+  <%= link_to "Create New Assignment", new_assignment_path %>
+</div>
+
 <h4>Incomplete Assignments</h4>
 <div class="assignment_form">
   <%= form_tag(completed_assignment_path, method: :put) do %>
@@ -20,8 +24,3 @@
      </li>
   <% end %>
   </ol>
-
-<div class="links">
-  <%= link_to "Create New Assignment", new_assignment_path %> ||
-  <%= link_to "Current Stats", completed_most_path(@user) %>
-</div>

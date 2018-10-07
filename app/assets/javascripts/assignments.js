@@ -1,4 +1,4 @@
-//Load incomplete assignment info & task form without page reload
+//Load incomplete assignments info & task form without page reload
 $(function(){
     $("a.assignment_page").on("click", function(e){
 
@@ -14,6 +14,13 @@ $(function(){
       });
     });
   });
+
+//hide task form until clicked
+$(function() {
+  $("#new_task").submit(function(){
+        $(this).hide(id);
+    })
+  })
 
 //Submit task using Ajax
 $(function(){

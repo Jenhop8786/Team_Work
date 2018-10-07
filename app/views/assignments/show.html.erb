@@ -8,24 +8,19 @@
   <%= render @assignment.tasks %>
 </ol>
 
-<div class="form">
-  <h3>Add Tasks to assignment: <%= @assignment.name %> </h3>
-    <%= form_for([@assignment, @task]) do |f| %>
-    <%= f.text_field :name, placeholder: "New Task" %>
-    <%= f.submit %>
-  <% end %>
+
+<p><%=link_to "Add Tasks", new_assignment_task_path([@assignment, @task]), :class => "new-task"%> </p>
+<div id="task_form">
+  <%= render 'tasks/form' %>
 </div>
 
 
 <br><br>
 <% if @assignment.user == current_user %>
 <div class="links">
-   <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data: { confirm: "Are you sure?" } %>
-    <br>
-   <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %>
-    <br>
+   <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data: { confirm: "Are you sure?" } %> ||
+   <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %> ||
    <%= link_to 'Back to Assignments', [current_user, :assignments] %>
-    <br>
 <% else %>
    <%= link_to 'Back to Assignments', assignments_path(@assignment) %>
 <% end %>
