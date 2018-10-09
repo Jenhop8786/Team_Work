@@ -30,21 +30,21 @@ $(function(){
   $("#new_task").on("submit", function(e){
     e.preventDefault();
 
-    $.ajax({
-      type: this.method,
-      url: this.action,
-      data: $(this).serialize(),
-        error: function(xhr, ajaxOptions, thrownError){
-          alert(xhr.status);
-          alert(thrownError);
-        },
-       success: function() {
-         $("input[name=commit]").removeAttr('disabled');
-//debugger
-         var $ol = $("#task_name");
-         //debugger
-          $ol.append($("#task_name").val());
-           $("#task_name").val("");
+  $.ajax({
+    type: this.method,
+    url: this.action,
+    data: $(this).serialize(),
+     error: function(xhr, ajaxOptions, thrownError){
+       alert(xhr.status);
+       alert(thrownError);
+    },
+     success: function() {
+      $("input[name=commit]").removeAttr('disabled');
+       //debugger
+      var $ol = $("#task_name");
+       //debugger
+       $ol.append($("#task_name").val());
+        $("#task_name").val("");
              //e.preventDefault();
        }
     });
