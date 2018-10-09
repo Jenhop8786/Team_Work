@@ -6,19 +6,22 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all
     #render :layout => false
-    respond_to do |format|
-     format.html {render 'index.html', :layout => false}
-     format.js {render 'index.js', :layout => false}
-   end
+    #respond_to do |format|
+  #   format.html {render 'index.html', :layout => false}
+    # format.js {render 'index.js', :layout => false}
+  # end
   end#index
 
   def create
+    @tasks = Task.all
    @task = @assignment.tasks.build(task_params)
    @task.user_id = current_user.id
    if @task.save
      @assignment.tasks << @task
-   end
-   render 'assignments/show'
+    render 'assignments/show'
+  #end
+
+end
    #redirect_to [current_user, @assignment]
 end#create
 

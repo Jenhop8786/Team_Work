@@ -7,6 +7,10 @@ class AssignmentsController < ApplicationController
     user = User.find params[:user_id]
     @incomplete_assignments = user.assignments.incomplete
     @complete_assignments = user.assignments.complete
+  #  respond_to do |format|
+  #   format.html {render 'index.html', :layout => false}
+  #   format.js {render 'index.js', :layout => false}
+  # end
   end#index
 
   def new
@@ -25,7 +29,6 @@ class AssignmentsController < ApplicationController
    end #create
 
    def show
-      #@user = current_user.assignments
       @task = Task.new
       @tasks = @assignment.tasks
     end#show

@@ -1,5 +1,0 @@
-<ol class="completed_assignments">
-  <% for assignment in @complete_assignments %>
-     <%= link_to assignment.name, user_assignment_path(current_user, assignment) %>
-<% end %>
-</ol>

@@ -9,10 +9,10 @@
 </ol>
 
 
-<button id="add_task"><%= link_to "Add Tasks", assignment_tasks_path(@assignment, @task) %></button>
-<%#= button_to "Add Tasks", { method: "GET"  }, class: "add_task", id: "add_task" %></p>
+<div class="task-form">
+  <%= render 'tasks/form' %>
+</div>
 
-<%= render 'tasks/form', :class => "hidden" %>
 
 <br><br>
 <% if @assignment.user == current_user %>
