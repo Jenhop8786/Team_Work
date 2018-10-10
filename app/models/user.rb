@@ -3,7 +3,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
+  validates_presence_of :name, presence: true 
   validates_presence_of :email, uniqueness: true
+
 
   scope :most_completed_assignments, -> { order(assignments_completed_count: :desc).first }
   scope :second_most_completed_assignments, -> { order(assignments_completed_count: :desc).all[1..-1] }

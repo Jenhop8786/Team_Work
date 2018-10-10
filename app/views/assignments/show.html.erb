@@ -1,16 +1,22 @@
-<div class="assignments">
-  <p>Assignment Name:<%= @assignment.name %></p>
-   <span id="assignment-id">Assignment Number:<%= @assignment.id %></span>
-  <p>Finish for practice on: <%= @assignment.due_date %></p>
-</div>
+<h2>Created Assignment</h2>
+ <span id="assignment-id">Assignment #<%= @assignment.id %></span>
 
-<ol class="tasks">
+<p class="assignmentName">
+  <%= @assignment.name if @assignment.name %>
+</p>
+
+ <p class="assignmentDueDate">
+   Due: <%= @assignment.due_date if @assignment.due_date%>
+ </p>
+
+
+<p id="assignmentInfo">
   <%= render @assignment.tasks %>
-</ol>
+</p>
 
 
-<div class="task-form">
-  <%= render 'tasks/form' %>
+<div id="taskForm">
+  <%= render 'tasks/form', locals: {task: @task} %>
 </div>
 
 
@@ -19,8 +25,29 @@
 <div class="links">
    <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data: { confirm: "Are you sure?" } %> ||
    <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %> ||
-   <%= link_to 'Back to Assignments', [current_user, :assignments] %>
+   <%#= link_to 'Back to Assignments', [current_user, :assignments] %>
 <% else %>
    <%= link_to 'Back to Assignments', assignments_path(@assignment) %>
 <% end %>
 </div>
+
+<a href="#" class="js-next" data-id="<%=@assignment.id%>">Next Assignment</a>
+
+<script type="text/javascript" charset="utf-8">
+ $(function() {
+   nextAssignment();
+ });
+
+ function nextAssignment() {
+   $(".js-next").on("click", function(event) {
+     var nextId = parseInt($(".js-next").attr(data-id)) + 1;
+     $.get("/assignments/" + nextId + ".json", function(assignment) {
+       var entry = new ListEntry(assignment)
+       $(".assignmentName").text(article["name"]);
+       $("#assignmentInfo").html(entry.listAssignment() );
+     });
+     $(".js-next").attr("data-id", assignment["id"]);
+   });
+   //event.preventDefault();
+ }
+ // request task form

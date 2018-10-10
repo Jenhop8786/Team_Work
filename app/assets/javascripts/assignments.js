@@ -39,13 +39,13 @@ $(function(){
        alert(thrownError);
     },
      success: function() {
-      $("input[name=commit]").removeAttr('disabled');
        //debugger
       var $ol = $("#task_name");
        //debugger
-       $ol.append($("#task_name").val());
+       $ol.append($("<p>" + "#task_name").val() + "</p>");
         $("#task_name").val("");
-             //e.preventDefault();
+        $("input[name=commit]").removeAttr('disabled');
+             e.preventDefault();
        }
     });
   });

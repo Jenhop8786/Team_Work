@@ -7,7 +7,7 @@ class TasksController < ApplicationController
     @tasks = Task.all
     #render :layout => false
     #respond_to do |format|
-  #   format.html {render 'index.html', :layout => false}
+     #format.html {render 'assignments/index.html', :layout => false}
     # format.js {render 'index.js', :layout => false}
   # end
   end#index
@@ -20,7 +20,6 @@ class TasksController < ApplicationController
      @assignment.tasks << @task
     render 'assignments/show'
   #end
-
 end
    #redirect_to [current_user, @assignment]
 end#create
@@ -63,6 +62,6 @@ end#create
   end
 
   def task_params
-    params.require(:task).permit(:name)
+    params.require(:task).permit(:name, :completed)
   end
 end#class
