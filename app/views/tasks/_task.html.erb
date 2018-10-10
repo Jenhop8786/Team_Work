@@ -1,3 +1,8 @@
-<p><%# if task.completed? %>
-  <%= task.name %>
+<p><% if task.completed? %>
+  <strike><%= task.name %></strike>
+	<%= link_to "Delete Task", assignment_task_path(@assignment, task), method: :delete, data: { confirm: "Are you sure?" } %>
+  <% else %>
+	<p><%= task.name %></p>
+  <% end %>
+ <%= link_to "Mark as Complete/Incomplete", complete_assignment_task_path(@assignment, task), method: :patch %>
 </p>
