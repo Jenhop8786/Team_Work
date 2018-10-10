@@ -1,8 +1,8 @@
 <p>New Assignment</p>
   <%= render partial: 'form', locals: {assignment: @assignment}  %>
 
-
-<div class="assignments"><h4>Incomplete Assignments</h4>
+<h4>Incomplete Assignments</h4>
+<div class="assignments">
   <%= form_tag(completed_assignment_path, method: :put) do %>
     <% for assignment in @incomplete_assignments %>
      <li>
@@ -21,87 +21,3 @@
        <%= link_to assignment.name, user_assignment_path(current_user, assignment) %>
     </li>
   <% end %>
-
-
-
-
-<script type="text/javascript" charset="utf-8">
-
-$(function() {
-  var url;
-  var userAssignment = document.getElementById("user") // check if the assignment path is netsted route
-  if (userAssignment === null) {
-    url = "/assignments.json"
-  } else {
-    var userId = $('#user').attr("data-id");
-    url = "/users/" + userId + "/assignments.json";
-  }
-  fetch(url)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      appendAssignmentJSON(json);
-    })
-    .then(addEventListeners)
-    .catch(function(error) {
-      console.log('Error!: ', error)
-    })
-  function appendAssignmentJSON(json) {
-      $('.loading').remove();
-      // we want to find the DOM element for the div with the class assignments
-      var div = $('.assignments')
-      // we want to iterate over the assignments
-      // debugger;
-      if (json.length !== undefined) {
-        for (var i = 0; i < json.length; i++) {
-          appendToDOM(div, json[i]);
-        }
-        return;
-      }
-      appendToDOM(div, json);
-  }
-
-  function appendToDOM(element, assignment) {
-    element.append(`
-      <p><a href="/assignments/${assignment.id}" >${assignment.name}</a></p>
-      <p id="assignmentInfo-${assignment.id}"></p><br>
-    `)
-
-    function prependToDOM(element, assignment) {
-      element.prepend(`
-        <p><a href="/assignments/${assignment.id}" >${assignment.name}</a></p>
-        <p id="assignmentInfo-${assignment.id}"></p><br>
-      `)
-    }
-
-    $("#assignment_form").on("submit", function(event) {
-      url = this.action
-
-      var values = $(this).serialize();
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded; charset=UFT-8"
-        }, //needed to correct Error code 422 & SyntaxError: Unexpected token < in JSON at position 0
-        credentials: 'include', //needed to correct Error Code 422
-        body: values
-      })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(json) {
-      console.log(json);
-      var div = $('.assignments');
-      prependToDOM(div, json);
-      $('#assignment_form')[0].reset(); //reset the form
-      $('input[data-disable-with]').removeAttr("disabled"); // re-activate the Create Assignment button
-    })
-    .then(addEventListeners)
-    .catch(function(error) {
-      console.log('Error!: ', error)
-    })
-    event.preventDefault();
-  })
-});
-</script>
