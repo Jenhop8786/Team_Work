@@ -45,7 +45,7 @@ $(function() {
         <p id="assignmentInfo-${assignment.id}"></p><br>
       `)
     }
-
+//create new assignment
     $("#assignment_form").on("submit", function(event) {
       url = this.action
 
