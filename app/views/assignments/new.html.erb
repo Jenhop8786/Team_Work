@@ -1,30 +1,7 @@
-<h1>New Assignment</h1>
-  <%= render 'form' %>
+<!-- <%= render partial: 'form', locals: {assignment: @assignment}   %> -->
 
-  <br>
 <div id="assignmentName">
 </div>
 
 <div id="assignmentResult">
 </div>
-
-<script type="text/javascript" charset="utf-8">
-  $(function () {
-    $('form').submit(function(event) {
-      //prevent form from submitting the default way
-      event.preventDefault();
-      var values = $(this).serialize();
-      // console.log($this);
-      var posting = $.post('/assignments', values);
-      posting.done(function(assignment) {
-        var entry = new ListEntry(assignment);
-        $("#assignmentName").html("<h4>You created an assignment ; </h4><h5>" + assignment["name"] );
-        $("#assignmentResult").html(entry.listAssignment())
-        // reset the form
-        $('#assignment_form')[0].reset();
-        // reset the button
-        $('input[data-disable-with]').removeAttr("disabled");
-      })
-    });
-  });
-</script>
