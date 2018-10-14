@@ -1,7 +1,4 @@
-<p>New Assignment
-  <%= render partial: 'form', locals: {assignment: @assignment}   %>
-</p>
-
+<p><%= link_to "Create Assignment", new_assignment_path(@assignment) %></p>
 <h4>Incomplete Assignments</h4>
 <div class="assignment-container">
   <%= form_tag(completed_assignment_path, method: :put) do %>

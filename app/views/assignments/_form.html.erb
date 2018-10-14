@@ -1,5 +1,5 @@
-<%= form_for assignment, :html => {:id => "assignment_form" } do |f| %>
-  <% if @assignment.errors.any? %>
+<%= form_for([current_user, @assignment]) do |f| %>
+   <% if @assignment.errors.any? %>
     <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this Assignment from being saved:</h2>
      <ul>
       <% @assignment.errors.full_messages.each do |message| %>
@@ -9,10 +9,13 @@
       <% end %>
     <br><br>
 
-   <%= f.label :name %>
-   <%= f.text_field :name %><br>
+<%= f.label :name %>
+  <%= f.text_field :name %>
    <%= f.label :due_date %>
-   <%= f.text_field :due_date %><br>
-   <%=  f.hidden_field :user_id , :value => current_user.id %>
-   <%= f.submit %>
-   <% end %>
+    <%= f.text_field :due_date %>
+    <%=  f.hidden_field :user_id , :value => current_user.id %>
+
+    <%= f.submit %>
+  <% end %>
+<br>
+  <%= link_to 'Back to your assignments', user_assignments_path(current_user, @assignment) %>
