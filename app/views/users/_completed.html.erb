@@ -1,10 +1,10 @@
 <h3> Status of who has done what</h3>
   <br>
-  <h1> **Featured User** </h1>
-  <h2><%= featured_user.email %> has completed the most (<%= featured_user.assignments.complete.size %>) assignments!</h2>
+  <h1> **Featured Coach** </h1>
+  <h2><%= featured_user.name %> has completed the most (<%= featured_user.assignments.complete.size %>) assignments!</h2>
 
   <% for user in @most_completed_users %>
-    <%= user.email %> has completed <%= user.assignments.complete.size %> assignments. <br>
+    <%= user.name %> has completed <%= user.assignments.complete.size %> assignments. <br>
   <% end %>
 
 
