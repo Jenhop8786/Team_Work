@@ -2,22 +2,24 @@ class AssignmentsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
-  #GET/ASSIGNMENTS
-  def index
-    @assignment = Assignment.new
-    user = User.find params[:user_id]
-    @incomplete_assignments = user.assignments.incomplete
-    @complete_assignments = user.assignments.complete
-   #  respond_to do |format|
-   #    format.html {render 'index.html', :layout => false}
-   # #   format.js {render 'index.js', :layout => false}
-   #  end
-  end#index
-
   def new
     @assignment = current_user.assignments.build
     @assignment.tasks.build
   end#new
+
+  #GET/ASSIGNMENTS
+  def index
+      user = User.find params[:user_id]
+      @assignment = Assignment.new # for the form in the index page
+      @assignment.tasks.build # for the form in the index page
+
+      @incomplete_assignments = user.assignments.incomplete
+      @complete_assignments = user.assignments.complete
+     #  respond_to do |format|
+     #    format.html { render :index }
+     #    format.json {render json: @assignments.recent}
+     # end
+  end#index
 
   #POST
   def create
