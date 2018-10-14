@@ -3,31 +3,29 @@ class TasksController < ApplicationController
   before_action :set_assignment
   before_action :set_task, except: [:create, :index]
 
+ def new
+   @task = Task.new # for form in Assignment
+ end
+
   def index
+    @assignment = Assignment.find(params[:assignment_id])
     @tasks = Task.all
-    #render :layout => false
-    #respond_to do |format|
-     #format.html {render 'assignments/index.html', :layout => false}
-    # format.js {render 'index.js', :layout => false}
-  # end
+    render json: @tasks, layout: false
   end#index
 
-  def create
-    @tasks = Task.all
-   @task = @assignment.tasks.build(task_params)
-   @task.user_id = current_user.id
-   if @task.save
-     @assignment.tasks << @task
-    render 'assignments/show'
-  #end
-end
-   #redirect_to [current_user, @assignment]
-end#create
-
   def show
-    @assignments = Assignment.find(params[:assignment_id])
+  #  @assignments = Assignment.find(params[:assignment_id])
     @task = Task.find(params[:id])
+    respond_to do |format|
+      render format.html {render :show }
+      render format.json { render @task, layout: false }
+    end
   end#show
+
+  def create
+   @task = Task.create(task_params)
+   render :json => @task, layout: false
+end
 
   def destroy
     @task = @assignment.tasks.find(params[:id])
