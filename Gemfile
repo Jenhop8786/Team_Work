@@ -31,7 +31,7 @@ gem 'jquery-rails'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'omniauth'
 gem 'omniauth-facebook', '~> 4.0'
-
+gem 'sprockets', '~> 3.7.2'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
