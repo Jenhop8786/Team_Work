@@ -1,8 +1,9 @@
-<p>New Assignment</p>
-  <%= render partial: 'form', locals: {assignment: @assignment}  %>
+<p>New Assignment
+  <%= render partial: 'form', locals: {assignment: @assignment}   %>
+</p>
 
 <h4>Incomplete Assignments</h4>
-<div class="assignments">
+<div class="assignment-container">
   <%= form_tag(completed_assignment_path, method: :put) do %>
     <% for assignment in @incomplete_assignments %>
      <li>
@@ -16,8 +17,16 @@
 <br>
 
 <h4>Completed Assignments</h4>
-  <% for assignment in @complete_assignments %>
-    <li>
-       <%= link_to assignment.name, user_assignment_path(current_user, assignment) %>
-    </li>
-  <% end %>
+<div class="completed_assignments">
+  <ul>
+    <% for assignment in @complete_assignments %>
+     <%= link_to assignment.name, user_assignment_path(current_user, assignment) %>
+    <% end %>
+  <%#= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data: { confirm: "Are you sure?" } %>
+  </ul>
+</div>
+
+
+
+
+<
