@@ -7,17 +7,16 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel="stylesheet">
   </head>
 
   <body>
     <h1>Team_Work</h1>
       <center>
-    <h3>The app that helps coaches stay better organized during practices and training</h3>
+    <h3>Stay organized and connected</h3>
       <% if user_signed_in? %>
-      <h2><ul>Welcome Coach <%= current_user.name if !current_user.nil? %></ul></h2>
+      <h2><u>Coach <%= current_user.name if !current_user.nil? %></u></h2>
       <%= link_to "Home Page", root_path %> ||
       <%= link_to "Sign out", destroy_user_session_path, method: :delete %> ||
       <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment), :class => "assignment_list" %> ||
