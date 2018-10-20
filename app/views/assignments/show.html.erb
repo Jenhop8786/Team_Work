@@ -1,35 +1,40 @@
-<div class="show-assignment">
-  <div class="details">
-    <h2>Assignment: <%= @assignment.name if @assignment.name %></h2>
-      <p class="assignment-info">Due: <%= @assignment.due_date if @assignment.due_date%></p>
+<h2 class="assignmentHeader">Assignment: <%= @assignment.name if @assignment.name %></h2>
+  <p class="assignmentDueDate">Due: <%= @assignment.due_date if @assignment.due_date%></p>
+   <span id="assignment-id">Assignment #<%= @assignment.id %></span>
 <br><br>
- </div>
+
+
+<div id="tasks">
+  <%= render 'tasks/task' %>
 </div>
 
-<% if @assignment.user == current_user %>
-<div class="links">
-   <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete %> ||
-   <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %> ||
-   <%= link_to 'Back to Assignments', [current_user, :assignments] %>
-   <% else %>
-   <%= link_to 'Back to Assignments', assignments_path(@assignment) %>
-   <% end %>
-</div>
-<br>
+
+<center>
+<p>
+  <a href="#" class="js-prev" assignment_id="<%= @assignment.id %>">Previous Assignment</a> ||
+  <a href="#" class="js-next" assignment_id="<%= @assignment.id %>">Next Assignment</a>
+</p>
+</center>
+
 
 <% if @assignment.complete? %>
 
-<div class="tasks">
-  <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :id => "showTasks" %>
-   <br>
-    <% else %>
-   <%= render partial: "tasks/form", locals: {assignment: @assignment, task: @task} %>
-   <br>
-   <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :id => "showTasks" %>
-<% end %>
+<p>This Assignment has been completed</p>
+<%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %> ||
+ <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :id => "show_tasks" %>
+    <br>
+      <% else %>
+        <%= render partial: "tasks/form", locals: {assignment: @assignment, task: @task} %>
+        <% if @assignment.user == current_user %>
+        <div class="links">
+           <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %> ||
+           <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %> ||
+           <%= link_to 'Back to Assignments', [current_user, :assignments] %>
+           <% else %>
+           <%= link_to 'Back to Assignments', assignments_path(@assignment) %>
+           <% end %>
+        </div>
+        <br>
+       <br>
+   <% end %>
 </div>
-
-<div class="taskAssignment">
-</div>
-
-<span id="assignment-id">Assignment #<%= @assignment.id %></span><br>

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :assignments
   end
 
+  resources :tasks, only: [:destroy]
+
   resources :assignments do
     resources :tasks do
       member do

@@ -1,0 +1,3 @@
+<% for assignment in @complete_assignments %>
+<li><%= link_to assignment.name, user_assignment_path(current_user, assignment) %></li>
+<% end %>

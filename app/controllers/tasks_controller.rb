@@ -8,24 +8,33 @@ class TasksController < ApplicationController
  end
 
   def index
-    @assignment = Assignment.find(params[:assignment_id])
-    @tasks = Task.all
-    render json: @tasks, layout: false
+    #@assignment = Assignment.find(params[:assignment_id])
+    @tasks = @assignment.tasks
+    respond_to do |format|
+      format.html {render 'tasks/index', :layout => false}
+      format.json {render :json => @tasks, :layout => false}
+    end
   end#index
 
   def show
   #  @assignments = Assignment.find(params[:assignment_id])
     @task = Task.find(params[:id])
-    respond_to do |format|
-      render format.html {render :show }
-      render format.json { render @task, layout: false }
-    end
+    redirect_to :controller => 'assignments', :action => 'show'
   end#show
 
   def create
-   @task = Task.create(task_params)
-   render :json => @task, layout: false
-end
+    @task = Task.create(task_params)
+    @task.user_id = current_user.id
+    if @task.save
+    @assignment.tasks << @task
+    respond_to do |format|
+      format.html {redirect_to @assignment}
+      format.json {render :json => @task}
+    end
+  else
+    redirect_to [current_user, @assignment], notice: "Task could not be created"
+  end
+  end
 
   def destroy
     @task = @assignment.tasks.find(params[:id])
@@ -34,7 +43,7 @@ end
     else
       flash[:error] = "Task could not be deleted"
     end
-      redirect_to [current_user, @assignment], notice: "Task deleted"
+      redirect_to [current_user, assignments: :show ], notice: "Task deleted"
   end#destroy
 
   def complete
