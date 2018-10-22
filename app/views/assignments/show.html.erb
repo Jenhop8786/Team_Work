@@ -20,12 +20,16 @@
 <% if @assignment.complete? %>
 
 <p>This Assignment has been completed</p>
-<%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %> ||
- <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :id => "show_tasks" %>
+   <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %> ||
+   <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :id => "showTasks" %>
+   <div class="taskList">
+    <div>
     <br>
       <% else %>
         <%= render partial: "tasks/form", locals: {assignment: @assignment, task: @task} %>
+
         <% if @assignment.user == current_user %>
+
         <div class="links">
            <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %> ||
            <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %> ||
@@ -34,6 +38,7 @@
            <%= link_to 'Back to Assignments', assignments_path(@assignment) %>
            <% end %>
         </div>
+
         <br>
        <br>
    <% end %>
