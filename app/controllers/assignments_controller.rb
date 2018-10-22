@@ -15,10 +15,6 @@ class AssignmentsController < ApplicationController
 
       @incomplete_assignments = user.assignments.incomplete
       @complete_assignments = user.assignments.complete
-      respond_to do |format|
-        format.html {render :index}
-        format.json {render :json => Assignment.all}
-     end
   end#index
 
   #POST
@@ -33,13 +29,9 @@ class AssignmentsController < ApplicationController
 
    def show
      @assignment = Assignment.find(params[:id])
-      @task = Task.new
-      #@tasks = @assignment.tasks
-      respond_to do|format|
-        format.html {render :show}
-        format.json {render json: @assignment, status: 200}
-      end
-    end#show
+     @task = Task.new
+     @tasks = @assignment.tasks
+   end#show
 
 #PATCH
    def edit
