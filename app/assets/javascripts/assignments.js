@@ -1,87 +1,109 @@
-//ES6 way of declaring an object using class constructor
-class Task {
-  constructor(data) {
-    // this.userName = data.user.name
-    this.assignmentId = data.assignment_id
-    this.userId = data.user_id
-    this.name = data.name
-    this.completed_at = data.completed_at;
-  }
-  //Sets a method on object prototype to save memory
-    renderTask(){
-      return `<li>${this.name}</li>`
-      // const $ol = $("#tasks ol");
-      // $ol.append("<li>" + this.name + "</li>");
-      // $("#task_name").val("");
-      }
+// Render html document before callback function triggers
+$(document).on('turbolinks:load', function() {
+  attachListeners();
+});
 
-  }
+const attachListeners = function() {
 
-// $(document).on('turbolinks:load', function() {
-//   attachListeners();
-// })
+// $("#new_assignment").on("submit", function(e) {
+//       //prevent form from submitting the default way
+//       e.preventDefault();
 //
-//  var attachListeners = function() {
+//   var values = $(this).serialize();
+//   var posting = $.post('/assignments', values);
+//
+//   posting.done(function(data) {
+//     var assignment = data;
+//     $("#assignmentName").text(assignment["name"]);
+//     $("#assignmentDueDate").text(assignment["due_date"]);
+//   });
+//     });
+//  });
 
-//Post a task through AJAX
-$(function(){
-  $("#new_task").on("submit", function(e){
+
+//Declaring object using ES6 version
+  class Task {
+    constructor(task) {
+      this.name = task.name;
+      this.user = task.user;
+    }
+    //Sets method on object prototype
+    renderTask() {
+      //return `<li>${task.name}</li>`
+      const $ol = $("#tasks ol");
+      $ol.append("<li>" + this.name + "</li>");
+      $("#task_name").val("");
+    }
+   }
+
+//Create and post a task
+  $("#new_task").on("submit", function(e) {
     e.preventDefault();
 
     $.ajax({
-      type:($("input[name='_method']").val() || this.method),
+      type: ($("input[name='_method']").val() || this.method),
       url: this.action + ".json",
       data: $(this).serialize(),
-      success: function(data) {
-
-        const task = new Task(data); //creates a new object from object constructor
-        $("#tasks").append(task.renderTask())
-        $("input[name=commit]").removeAttr('disabled');//enable create button after submit
-      }
+       success: function(data) {
+         const task = new Task(data); //new object constructor
+         $("#tasks").append(task.renderTask());
+         $("#create").removeAttr('disabled');
+       }
     })
-.error(function(error) {
-  alert("Something is not right")
-});
-});
-});
-$(function() {
-$("#showTasks").on("click", function(e){
-        e.preventDefault();
-        $.ajax({
-            method: 'GET',
-            url: this.href + ".json",
-            //data: $(this).serialize()
-        }).done(function(data){
-            // const $ol = $("#tasks ol")
-            // $ol.html("")
-            data.forEach(function(task){
-              //  $ol.append(`<li> ${task.user.name} added: ${task.name} </li>`);
-              return `<li>${this.name}</li>`
-            })
-        })
-        .error(function(error){
-            alert("There was an error!")
+    .error(function(error) {
+      alert("Something is not right")
+    });
+  });
+
+
+
+//use Ajax to show tasks on completed assignment show page 
+  $("#showTasks").on("click", function(e) {
+    e.preventDefault();
+
+    $.ajax({
+      method: 'GET',
+      url: this.href + ".json",
+    })
+    .done(function(data){
+      const $ol = $("#tasks ol")
+      $ol.html("")
+      data.forEach(function(task){      //iterate over each task
+        $ol.append(`<li>${task.name}</li>`);
+      })
+
+    })
+    .error(function(error) {
+      alert("Something is not right")
+    });
+  });
+
+//Show next assignment
+  $(".js-next").on("click", function() {
+        const nextId = parseInt($(".js-next").attr("assignment_id")) + 1;
+        $.get("/assignments/" + nextId + ".json", function(data) {
+            $(".assignmentName").html("Assignment: " + data["name"]);
+            $(".assignmentDueDate").html("Due: " + data["due_date"]);
+            $(".assignment-id").html("Assignment #: " + data["id"]);
+
+            $(".js-next").attr("assignment-id", data["id"]);
         });
-    })
-});
+        return false
+      });
+  //Show previous assignment
 
-// Loads the next assignment page through Ajax
-// $(".js-next").on("click", function() {
-//         const nextId = parseInt($(".js-next").attr("assignment_id")) + 1;
-//         $.get("/assignments/" + nextId + ".json", function(data) {
-//             $(".assignmentHeader").html("Assignment:" + data["name"]);
-//             $(".assignmentDueDate").html("Due:" + data["due date"]);
-//             $(".js-next").attr("assignment-id", data["id"]);
-//         });
-//         return false
-//       });
-//   //Loads the previous assignment page through AJAX
-//   $(".js-prev").on("click", function() {
-//     const prevId = parseInt($(".js-prev").attr("assignment_id")) - 1;
-//      $.get("/assignments/" + prevId + ".json", function(data) {
-//      $(".assignmentHeader").html("Assignment:" + data["name"]);
-//      $(".assignmentDueDate").html("Due:" + data["due date"]);
-//      $(".js-next").attr("assignment-id", data["id"]);
-//     });
-//       return false
-//   });
+      $(".js-prev").on("click", function() {
+        const nextId = parseInt($(".js-next").attr("assignment_id")) - 1;
+        $.get("/assignments/" + nextId + ".json", function(data) {
+            $(".assignmentName").html("Assignment: " + data["name"]);
+            $(".assignmentDueDate").html("Due: " + data["due_date"]);
+            $(".assignment-id").html("Assignment #: " + data["id"]);
+
+          $(".js-prev").attr("assignment-id", data["id"]);
+        });
+        return false
+      });
+
+
+
+}
