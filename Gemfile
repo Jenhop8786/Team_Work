@@ -32,6 +32,7 @@ gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'omniauth'
 gem 'omniauth-facebook', '~> 4.0'
 gem 'sprockets', '~> 3.7.2'
+gem 'active_model_serializers'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
