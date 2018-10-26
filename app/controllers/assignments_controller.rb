@@ -10,16 +10,15 @@ class AssignmentsController < ApplicationController
   #GET/ASSIGNMENTS
   def index
       user = User.find params[:user_id]
-      @assignment = Assignment.new # for the form in the index page
-      @assignment.tasks.build # for the form in the index page
-
-      @incomplete_assignments = user.assignments.incomplete
-      @complete_assignments = user.assignments.complete
+      @assignment = Assignment.new #for form in index
+      @incomplete_assignments = Assignment.incomplete.all
+      @complete_assignments = Assignment.complete.all
   end#index
 
   #POST
   def create
     @assignment = current_user.assignments.build(assignment_params)
+    #render json: @assignment, status: 201
      if @assignment.save
        redirect_to [current_user, @assignment], notice: "Assignment was created successfully!"
      else
@@ -31,6 +30,10 @@ class AssignmentsController < ApplicationController
      @assignment = Assignment.find(params[:id])
      @task = Task.new
      @tasks = @assignment.tasks
+     respond_to do |format|
+       format.html {render :show}
+       format.json {render json: @assignment, status: 200}
+     end
    end#show
 
 #PATCH
