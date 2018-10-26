@@ -12,9 +12,8 @@
   </head>
 
   <body>
-    <h1>Team_Work</h1>
+    <h1>Team_Work - Stay organized</h1>
       <center>
-    <h3>Stay organized and connected</h3>
       <% if user_signed_in? %>
       <h2><u>Coach <%= current_user.name if !current_user.nil? %></u></h2>
       <%= link_to "Home Page", root_path %> ||

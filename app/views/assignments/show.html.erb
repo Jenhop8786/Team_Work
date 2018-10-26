@@ -3,8 +3,6 @@
   <p><a href="#" class="js-next" assignment_id="<%= @assignment.id %>">&#8250;</a></p>
 </center>
 
-
-
 <h2 class="assignmentName">Assignment:<%= @assignment.name %></h2>
   <p class="assignmentDueDate">Due: <%= @assignment.due_date if @assignment.due_date%></p>
   <p class="assignment-id">Assignment #<%= @assignment.id %></p>
@@ -25,7 +23,7 @@
      <%= render 'tasks/task' %>
   </div>
 
-  <%= render 'tasks/form' %>
+<%= render 'tasks/form' %>
 
 <% if @assignment.user == current_user %>
 
