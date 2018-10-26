@@ -1,7 +1,5 @@
 <ol>
-   <% if @assignment.tasks.size > 0 %>
-       <li>
-         <strong><%= @task.name %></strong>
-       </li>
-    <% end %> 
+   <% @assignment.tasks.each do |task| %>
+       <li><%= task.name %></li>
+   <% end %>
 </ol>

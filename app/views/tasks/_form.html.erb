@@ -1,7 +1,4 @@
-<p>Add a Task </p>
 <%= form_for ([@assignment, @task]) do |f| %>
-   <%= f.text_field :name, :placeholder => "Add task" %>
-   <%= f.hidden_field :assignment_id, :value => assignment.id %>
-   <%= f.hidden_field :user_id, :value => current_user.id %>
-   <%= f.submit "Create" %>
+  <p> <%= f.text_field :name, :placeholder => "Add task" %><p>
+  <p> <%= f.submit "Create Task", id: "create" %></p>
 <% end %>

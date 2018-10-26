@@ -1,13 +1,7 @@
 <ol>
     <% @assignment.tasks.each do |task|%>
-        <li><%= task.user.name %> added: <%= task.name %></li>
-            <%# if logged_in %>
-                <% if task.user_id == current_user.id %>
-                <p>
-                    <%= link_to "Delete", assignment_task_path(@assignment, task), method: :delete, data: { confirm: "Are you sure?" } %>
-                </p>
-                <%# end %>
-            <% end %>
+      <li><%= task.name %></li>
+      <p><%= link_to "Remove Task", assignment_task_path(@assignment, task), method: :delete, data: { confirm: "Are you sure?" } %></p>
     <% end %>
 </ol>
 

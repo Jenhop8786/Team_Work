@@ -19,11 +19,7 @@ class TasksController < ApplicationController
   def show
   #  @assignments = Assignment.find(params[:assignment_id])
     @task = Task.find(params[:id])
-    #redirect_to :controller => 'assignments', :action => 'show'
-    respond_to do|format|
-      format.html {render :show}
-      format.json {render json: @assignment, status: 200}
-    end
+#    redirect_to :controller => 'assignments', :action => 'show'
   end#show
 
   def create
