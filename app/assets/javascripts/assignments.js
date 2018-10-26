@@ -57,7 +57,7 @@ const attachListeners = function() {
 
 
 
-//use Ajax to show tasks on completed assignment show page 
+//use Ajax to show tasks on completed assignment show page
   $("#showTasks").on("click", function(e) {
     e.preventDefault();
 
@@ -82,18 +82,18 @@ const attachListeners = function() {
   $(".js-next").on("click", function() {
         const nextId = parseInt($(".js-next").attr("assignment_id")) + 1;
         $.get("/assignments/" + nextId + ".json", function(data) {
-            $(".assignmentName").html("Assignment: " + data["name"]);
-            $(".assignmentDueDate").html("Due: " + data["due_date"]);
-            $(".assignment-id").html("Assignment #: " + data["id"]);
+            $(".assignmentName").html("Assignment:" + data["name"]);
+            $(".assignmentDueDate").html("Due:" + data["due_date"]);
+            $(".assignment-id").html("Assignment #:" + data["id"]);
 
             $(".js-next").attr("assignment-id", data["id"]);
         });
-        return false
+    //    return false
       });
   //Show previous assignment
 
       $(".js-prev").on("click", function() {
-        const nextId = parseInt($(".js-next").attr("assignment_id")) - 1;
+         const nextId = parseInt($(".js-next").attr("assignment_id")) - 1;
         $.get("/assignments/" + nextId + ".json", function(data) {
             $(".assignmentName").html("Assignment: " + data["name"]);
             $(".assignmentDueDate").html("Due: " + data["due_date"]);

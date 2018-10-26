@@ -1,7 +1,6 @@
 <ol>
     <% @assignment.tasks.each do |task|%>
       <li><%= task.name %></li>
-      <p><%= link_to "Remove Task", assignment_task_path(@assignment, task), method: :delete, data: { confirm: "Are you sure?" } %></p>
     <% end %>
 </ol>
 
