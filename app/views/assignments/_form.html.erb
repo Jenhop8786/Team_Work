@@ -14,8 +14,8 @@
    <%= f.label :due_date %>
     <%= f.text_field :due_date %>
     <%=  f.hidden_field :user_id , :value => current_user.id %>
-
+<div class="actions">
     <%= f.submit %>
+</div>
   <% end %>
-<br>
-  <%= link_to 'Back to your assignments', user_assignments_path(current_user, @assignment) %>
+  
