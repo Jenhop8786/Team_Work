@@ -11,8 +11,8 @@ class AssignmentsController < ApplicationController
   def index
       user = User.find params[:user_id]
       @assignment = Assignment.new #for form in index
-      @incomplete_assignments = Assignment.incomplete.all
-      @complete_assignments = Assignment.complete.all
+      @incomplete_assignments = current_user.assignments.incomplete
+      @complete_assignments = current_user.assignments.complete
   end#index
 
   #POST
