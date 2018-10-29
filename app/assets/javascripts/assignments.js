@@ -55,54 +55,48 @@ const attachListeners = function() {
     });
   });
 
-
-
 //use Ajax to show tasks on completed assignment show page
-  $("#showTasks").on("click", function(e) {
+  $("a.show_tasks").on("click", function(e) {
+    //alert("clicked")
     e.preventDefault();
 
     $.ajax({
-      method: 'GET',
-      url: this.href + ".json",
-    })
-    .done(function(data){
-      const $ol = $("#tasks ol")
-      $ol.html("")
-      data.forEach(function(task){      //iterate over each task
-        $ol.append(`<li>${task.name}</li>`);
-      })
-
+      method: "GET",
+      url: this.href,
+    }).success(function(data) {
+    //  console.log(data)
+      //load that data into DOM
+      $("div.taskList").html(data) //inject data into empty container
     })
     .error(function(error) {
       alert("Something is not right")
-    });
-  });
+    })
+   });
 
 //Show next assignment
-  $(".js-next").on("click", function() {
-        const nextId = parseInt($(".js-next").attr("assignment_id")) + 1;
-        $.get("/assignments/" + nextId + ".json", function(data) {
-            $(".assignmentName").html("Assignment:" + data["name"]);
-            $(".assignmentDueDate").html("Due:" + data["due_date"]);
-            $(".assignment-id").html("Assignment #:" + data["id"]);
+$(".js-next").on("click", function() {
+   const nextId = parseInt($(".js-next").attr("assignment_id")) + 1;
+     $.get("/assignments/" + nextId + ".json", function(data) {
+       $(".assignmentName").html("Assignment:" + data["name"]);
+       $(".assignmentDueDate").html("Due:" + data["due_date"]);
+       $(".assignment-id").html("Assignment #:" + data["id"]);
 
-            $(".js-next").attr("assignment-id", data["id"]);
-        });
+       $(".js-next").attr("assignment-id", data["id"]);
+    });
     //    return false
-      });
+  });
   //Show previous assignment
+$(".js-prev").on("click", function() {
+   const nextId = parseInt($(".js-next").attr("assignment_id")) - 1;
+     $.get("/assignments/" + nextId + ".json", function(data) {
+       $(".assignmentName").html("Assignment: " + data["name"]);
+       $(".assignmentDueDate").html("Due: " + data["due_date"]);
+       $(".assignment-id").html("Assignment #: " + data["id"]);
 
-      $(".js-prev").on("click", function() {
-         const nextId = parseInt($(".js-next").attr("assignment_id")) - 1;
-        $.get("/assignments/" + nextId + ".json", function(data) {
-            $(".assignmentName").html("Assignment: " + data["name"]);
-            $(".assignmentDueDate").html("Due: " + data["due_date"]);
-            $(".assignment-id").html("Assignment #: " + data["id"]);
-
-          $(".js-prev").attr("assignment-id", data["id"]);
-        });
-        return false
-      });
+       $(".js-prev").attr("assignment-id", data["id"]);
+    });
+    return false
+  });
 
 
 
