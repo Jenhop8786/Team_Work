@@ -14,7 +14,12 @@
 <p>This Assignment has been completed</p>
    <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %>
    <br>
-   <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :id => "showTasks" %>
+  <p>
+   <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :class => "show_tasks" %>
+ </p>
+   <div class="taskList">
+
+   </div>
    <br>
 <% else %>
 
