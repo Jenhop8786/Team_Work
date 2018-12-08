@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
       request.env['omniauth.origin'] || root_path
     end
 
+    def logged_in?
+      !!session[:user_id]
+    end 
+
+    def require_login
+      redirect_to root_path unless logged_in?
+    end
+
     protected
 
     def configure_permitted_parameters

@@ -27,7 +27,7 @@ const attachListeners = function() {
       this.name = task.name;
       this.user = task.user;
     }
-    //Sets method on object prototype
+//Set method on object prototype
     renderTask() {
       //return `<li>${task.name}</li>`
       const $ol = $("#tasks ol");
@@ -36,7 +36,7 @@ const attachListeners = function() {
     }
    }
 
-//Create and post a task
+//Create and post a task using Ajax
   $("#new_task").on("submit", function(e) {
     e.preventDefault();
 
@@ -83,7 +83,7 @@ $(".js-next").on("click", function() {
 
        $(".js-next").attr("assignment-id", data["id"]);
     });
-    //    return false
+        return false
   });
   //Show previous assignment
 $(".js-prev").on("click", function() {

@@ -1,5 +1,5 @@
 class AssignmentSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :due_date
 
-  has_many :tasks 
+  has_many :tasks
 end

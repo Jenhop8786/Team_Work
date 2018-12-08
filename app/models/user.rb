@@ -3,7 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
-  validates_presence_of :name, presence: true 
+  validates_presence_of :name, presence: true
   validates_presence_of :email, uniqueness: true
 
 
@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :assignments
   has_many :assignments_completed, -> { complete }, class_name: "Assignment"
   has_many :tasks, through: :assignments
+  has_many :notes 
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

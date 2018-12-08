@@ -17,9 +17,9 @@
       <% if user_signed_in? %>
       <h2><u>Coach <%= current_user.name if !current_user.nil? %></u></h2>
       <%= link_to "Home Page", root_path %> ||
-      <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment), :class => "assignment_list" %> ||
+      <%#= link_to "Notes", user_notes_path(current_user) %> ||
       <%= link_to "Sign out", destroy_user_session_path, method: :delete %> ||
-      <%= link_to "Current Stats", completed_most_path(@user) %></h4>
+      <%= link_to "Current Stats", completed_most_path(@user) %>
       <% else %>
     <h4> Sign-in or Sign-up to start making Assignments </h4>
     <% end %>

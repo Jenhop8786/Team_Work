@@ -1,10 +1,8 @@
 <% if signed_in? %>
 <center>
   <h1>Ready to get work done?</h1>
-  <!-- <h3>See your completed assignments</h3>
+  <h4>view your <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment), :class => "assignment_list" %>
 
-
-  <%= render partial: "complete", locals: {assignments: @assignments} %> -->
       <% else %>
       <h3> Sign in or Sign up to start making assignments <h3>
      <%= link_to "Log in", new_session_path(@user) %>

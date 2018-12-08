@@ -2,10 +2,6 @@ class AssignmentsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
-  def new
-    @assignment = current_user.assignments.build
-    @assignment.tasks.build
-  end#new
 
   #GET/ASSIGNMENTS
   def index
@@ -14,6 +10,11 @@ class AssignmentsController < ApplicationController
       @incomplete_assignments = current_user.assignments.incomplete
       @complete_assignments = current_user.assignments.complete
   end#index
+
+  def new
+    @assignment = current_user.assignments.build
+    @assignment.tasks.build
+  end#new
 
   #POST
   def create
@@ -27,13 +28,8 @@ class AssignmentsController < ApplicationController
    end #create
 
    def show
-     @assignment = Assignment.find(params[:id])
+     @user = current_user.assignments
      @task = Task.new
-     @tasks = @assignment.tasks
-     respond_to do |format|
-       format.html {render :show}
-       format.json {render json: @assignment, status: 200}
-     end
    end#show
 
 #PATCH
