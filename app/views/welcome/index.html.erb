@@ -1,8 +1,8 @@
-<% if signed_in? %>
+<%# if @user %>
   <h4>Check out <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment) %> </h4>
    <br /><br />
     <h4>Check out <%= link_to "Current Stats", completed_most_path(@user) %></h4>
-      <% else %>
+      <%# else %>
       <h3> Sign in or Sign up to start making assignments <h3>
-     <%= link_to "Log in", new_session_path(@user) %>
-<% end %>
+     <%= link_to "Log in", user_session_path(@user) %>
+<%# end %>

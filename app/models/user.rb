@@ -5,8 +5,9 @@ class User < ApplicationRecord
 
   validates_presence_of :email, uniqueness: true
 
-  scope :most_completed_assignments, -> { order(assignments_completed_count: :desc).first }
-  scope :second_most_completed_assignments, -> { order(assignments_completed_count: :desc).all[1..-1] }
+  scope :most_completed_assignments, -> {order(assignments_completed_count: :desc).first }
+  scope :second_most_completed_assignments, -> {order(assignments_completed_count: :desc).all[1..-1] }
+
   has_many :assignments
   has_many :assignments_completed, -> { complete }, class_name: "Assignment"
   has_many :tasks, through: :assignments
