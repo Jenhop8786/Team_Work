@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%# if @user %>
   <h4>Check out <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment) %> </h4>
    <br /><br />
@@ -6,3 +7,15 @@
       <h3> Sign in or Sign up to start making assignments <h3>
      <%= link_to "Log in", user_session_path(@user) %>
 <%# end %>
+=======
+<% if signed_in? %>
+<center>
+  <h1>Ready to get work done?</h1>
+  <h4>view your <%= link_to "Assignments", user_assignments_path(current_user.id, @assignment), :class => "assignment_list" %>
+
+      <% else %>
+      <h3> Sign in or Sign up to start making assignments <h3>
+     <%= link_to "Log in", new_session_path(@user) %>
+   </center>
+<% end %>
+>>>>>>> 61413ce6d1b98159c4f5022b0a6772370495cfe2

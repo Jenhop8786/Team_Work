@@ -22,6 +22,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+
+gem 'jquery-rails'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -29,7 +31,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'omniauth'
 gem 'omniauth-facebook', '~> 4.0'
-
+gem 'sprockets', '~> 3.7.2'
+gem 'active_model_serializers'
+gem "loofah", ">= 2.2.3"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

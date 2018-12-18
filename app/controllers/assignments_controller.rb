@@ -2,11 +2,13 @@ class AssignmentsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
+
   #GET/ASSIGNMENTS
   def index
-    user = User.find params[:user_id]
-    @incomplete_assignments = user.assignments.incomplete
-    @complete_assignments = user.assignments.complete
+      user = User.find params[:user_id]
+      @assignment = Assignment.new #for form in index
+      @incomplete_assignments = current_user.assignments.incomplete
+      @complete_assignments = current_user.assignments.complete
   end#index
 
   def new
@@ -17,6 +19,7 @@ class AssignmentsController < ApplicationController
   #POST
   def create
     @assignment = current_user.assignments.build(assignment_params)
+    #render json: @assignment, status: 201
      if @assignment.save
        redirect_to [current_user, @assignment], notice: "Assignment was created successfully!"
      else
@@ -25,9 +28,9 @@ class AssignmentsController < ApplicationController
    end #create
 
    def show
-      #@user = current_user.assignments
-      @task = Task.new
-    end#show
+     @user = current_user.assignments
+     @task = Task.new
+   end#show
 
 #PATCH
    def edit
@@ -39,18 +42,15 @@ class AssignmentsController < ApplicationController
     redirect_to [current_user, @assignment], notice: "Assignment updated successfully!"
   end#update
 
-
  #DELETE
   def destroy
-    if @assignment.destroy
-        current_user.assignments_completed_count -= 1
-        current_user.save
+    @assignment.destroy
 
     redirect_to [current_user, @assignment], notice: "Assignment was deleted successfully!"
-  end
-end #destroy
+  end #destroy
 
   def completed
+    #binding.pry
      Assignment.where(id: params[:assignment_ids]).update_all(status: true)
      current_user.assignments_completed_count +=(params[:assignment_ids].count)
      current_user.save

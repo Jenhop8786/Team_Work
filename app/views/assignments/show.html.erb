@@ -1,23 +1,47 @@
-<h2>Created by: <%= @assignment.user.email %></h2>
-<br><br>
-<h2><%= @assignment.name %></h2>
-<h4>Due Date: <%= @assignment.due_date %></h4>
+<center>
+  <a href="#" class="js-prev" assignment_id="<%= @assignment.id %>">previous</a>
+  <a href="#" class="js-next" assignment_id="<%= @assignment.id %>">next</a>
+</center>
 
-<div class="tasks_wrapper">
-  <%= render @assignment.tasks, locals:{assignment:@assignment} %>
-</div>
-<% if @assignment.user == current_user %>
- <div class="form">
-	<%= render "tasks/form" %>
-</div>
-<div class="links">
-   <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data: { confirm: "Are you sure?" } %>
-  <br>
-   <%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %>
-  <br>
-   <%= link_to 'Back to Assignments', [current_user, :assignments] %>
+<h2 class="assignmentName">Assignment:<%= @assignment.name %></h2>
+  <p class="assignmentDueDate">Due: <%= @assignment.due_date if @assignment.due_date%></p>
+  <p class="assignment-id">Assignment #<%= @assignment.id %></p>
+<br><br>
+
+
+<% if @assignment.complete? %>
+
+<p>This Assignment has been completed</p>
+   <%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %>
    <br>
-</div>
+  <p>
+   <%= link_to "Show Tasks", assignment_tasks_path(@assignment), :class => "show_tasks" %>
+ </p>
+   <div class="taskList">
+
+   </div>
+   <br>
 <% else %>
-<%= link_to 'Back to Assignments', assignments_path(@assignment) %>
-<% end %>
+
+<p>Tasks</p>
+  <div id="tasks">
+     <%= render 'tasks/task' %>
+  </div>
+
+<%= render 'tasks/form' %>
+
+<% if @assignment.user == current_user %>
+
+<div class="dropdown">
+  <button class="dropbtn">Assignment Menu</button>
+    <div class="dropdown-content">
+      <a href="#"><%= link_to 'Delete Assignment', [current_user, @assignment], method: :delete, data:{confirm: "Delete Assignment?"} %></a>
+      <a href="#"><%= link_to 'Edit Assignment', [:edit, current_user, @assignment] %></a>
+      <a href="#"><%= link_to 'Back to Assignments', [current_user, :assignments] %></a>
+    </div>
+</div>
+
+  <% else %>
+    <%= link_to 'Back to Assignments', assignments_path(@assignment) %>
+    <% end %>
+  <% end %>

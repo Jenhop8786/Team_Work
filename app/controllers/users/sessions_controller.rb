@@ -4,12 +4,12 @@ class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  #def new
-    #@user = User.new(user_params)
-    #@user.save
+  def new
+    @user = User.new(user_params)
+    @user.save
 
-    #redirect_to @assignment
-  # end
+    redirect_to @assignment
+   end
 
   # POST /resource/sign_in
   # def create
@@ -31,7 +31,7 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def user_params
-    params.require(:user).permit(:email)
+    params.require(:user).permit(:email, :name)
   end
 
 end

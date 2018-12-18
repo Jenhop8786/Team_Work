@@ -1,30 +1,29 @@
-<center>
-<br>
-<div class="links">
-  <%= link_to "Create New Assignment", new_assignment_path %>
-</div>
-<h3>Incomplete Assignments</h3>
+<h3> Create a new assignment </h3>
+<p><%= render 'form' %></p>
+
+<h4>Incomplete Assignments</h4>
   <%= form_tag(completed_assignment_path, method: :put) do %>
     <% for assignment in @incomplete_assignments %>
-      <ul>
+     <li>
         <%= check_box_tag 'assignment_ids[]', assignment.id %>
         <%= link_to assignment.name, user_assignment_path(current_user, assignment) %>
-      </ul>
+      </li>
     <% end %>
-    <%= submit_tag 'Mark as Completed' %>
+    <%= submit_tag 'Complete Assignment', :class => "complete_assignment" %>
   <% end %>
 <br>
-</center>
-<center>
+
 <h3>Completed Assignments</h3>
-  <% for assignment in @complete_assignments %>
-    <ul>
-     <%= link_to assignment.name, assignment_path(assignment) %>
-    </ul>
- <%# end %>
+<% for assignment in @complete_assignments %>
+<li><%= link_to assignment.name, user_assignment_path(current_user, assignment) %></li>
 <% end %>
+<<<<<<< HEAD
 </center>
 
 <footer>
 <h2> Curious to see <%= link_to "Current Stats", completed_most_path(@user) %> ?</h2>
 </footer>
+=======
+
+<%= link_to "Notes", user_notes_path(current_user, @note) %>
+>>>>>>> 61413ce6d1b98159c4f5022b0a6772370495cfe2

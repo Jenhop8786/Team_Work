@@ -1,0 +1,10 @@
+<%= form_for ([current_user, @note]) do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %><br>
+
+<%= f.label :body, "Note" %>
+<%= f.text_field :body %>
+
+<%= f.submit class: 'Submit' %>
+
+<% end %>

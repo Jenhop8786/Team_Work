@@ -4,7 +4,10 @@ class TasksController < ApplicationController
   before_action :set_task, except: [:create, :index]
 
   def index
-    @tasks = Task.all
+    @user = current_user
+    @tasks = @user.tasks.all
+
+    respond_with(@tasks)
   end
 
   def create

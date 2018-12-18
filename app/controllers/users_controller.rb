@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    #@user = User.find(params[:id])
+    @incomplete_assignments = current_user.assignments.incomplete
+  end
+
   def show
     @user = User.find(params[:id])
-    @assignment = Assignment.new
+    @complete_assignments = current_user.assignments.complete
 
     redirect_to user_path(@user)
   end

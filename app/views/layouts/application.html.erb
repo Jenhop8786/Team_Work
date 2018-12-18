@@ -7,20 +7,23 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel="stylesheet">
   </head>
 
   <body>
-    <h1>Team_Work</h1>
+    <h1>Team_Work - Stay organized</h1>
       <center>
-    <h3>The app that helps coaches stay better organized during practices and training</h3>
       <% if user_signed_in? %>
-      <h2><ul>Welcome, <%= current_user.email if !current_user.nil? %></ul></h2>
-      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <h2><u>Coach <%= current_user.name if !current_user.nil? %></u></h2>
+      <%= link_to "Home Page", root_path %> ||
+      <%#= link_to "Notes", user_notes_path(current_user) %> ||
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %> ||
+      <%= link_to "Current Stats", completed_most_path(@user) %>
       <% else %>
     <h4> Sign-in or Sign-up to start making Assignments </h4>
     <% end %>
+    </center>
 
     <% if notice %>
     <p class="notice"><%= notice %></p>
@@ -28,6 +31,5 @@
     <p class="alert"><%= alert %></p>
     <% end %>
 	<%= yield %>
-</center>
   </body>
 </html>
